@@ -11,5 +11,4 @@ void main(){
     a~/=10;
   }
   print(rev);
-
 }
