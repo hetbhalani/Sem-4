@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'user.dart';
+
 
 class my_form extends StatefulWidget {
   const my_form({super.key});
@@ -8,6 +10,9 @@ class my_form extends StatefulWidget {
 }
 
 class _my_formState extends State<my_form> {
+
+  User user = User();
+
   TextEditingController userName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -35,7 +40,7 @@ class _my_formState extends State<my_form> {
                   decoration: InputDecoration(
                     labelText: "User Name",
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -55,7 +60,7 @@ class _my_formState extends State<my_form> {
                   decoration: InputDecoration(
                     labelText: "Email",
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -71,13 +76,13 @@ class _my_formState extends State<my_form> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: password,
                   decoration: InputDecoration(
                     labelText: "Password",
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -91,15 +96,23 @@ class _my_formState extends State<my_form> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+
+                      });
+                      user.addUser(userName: userName.text, email: email.text, password: password.text);
+                      print(user.readUser());
+                    },
                     child: Text("Add"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor:Colors.blue,
                         foregroundColor: Colors.white,
                     ),
-                  )
+                  ),
+
                 ],
               )
             ],
