@@ -148,12 +148,21 @@ class _CrudUserState extends State<CrudUser> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      isValidEmail = false;
+                      setState(() {
+                        isValidEmail = false;
+                      });
                       return 'Please enter your name';
                     }
                     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      isValidEmail = false;
+                      setState(() {
+                        isValidEmail = false;
+                      });
                       return 'Please enter a valid email';
+                    }
+                    else{
+                      setState(() {
+                        isValidEmail = true;
+                      });
                     }
                     return null;
                   },
@@ -192,15 +201,21 @@ class _CrudUserState extends State<CrudUser> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      isValidpass = false;
+                      setState(() {
+                        isValidpass = false;
+                      });
                       return 'Please enter password';
                     }
                     if (value.length != 8 || !RegExp(r'^\d{8}$').hasMatch(value)) {
-                      isValidpass = false;
+                      setState(() {
+                        isValidpass = false;
+                      });
                       return 'Enter 8 digit Password';
                     }
                     else{
-                      isValidpass = true;
+                      setState(() {
+                        isValidpass = true;
+                      });
                     }
                     return null;
                   },
@@ -214,17 +229,31 @@ class _CrudUserState extends State<CrudUser> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Mobile Number",
-                    prefixIcon: Icon(Icons.phone),
+                    prefixIcon: Icon(
+                        Icons.phone,
+                        color: isValidphone ? Colors.black54 : Colors.red
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
+                      setState(() {
+                        isValidphone = false;
+                      });
                       return 'Please enter your phone number';
                     }
                     if (value.length != 10 || !RegExp(r'^\d+$').hasMatch(value)) {
+                      setState(() {
+                        isValidphone = false;
+                      });
                       return 'Please enter a valid 10-digit phone number';
+                    }
+                    else{
+                      setState(() {
+                        isValidphone = true;
+                      });
                     }
                     return null;
                   },
@@ -237,7 +266,10 @@ class _CrudUserState extends State<CrudUser> {
                   readOnly: true,
                   decoration: InputDecoration(
                     labelText: "Date of Birth",
-                    prefixIcon: Icon(Icons.calendar_today), // Calendar icon
+                    prefixIcon: Icon(
+                        Icons.calendar_today,
+                        color: isValiddob ? Colors.black54 : Colors.red
+                    ), // Calendar icon
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -260,13 +292,24 @@ class _CrudUserState extends State<CrudUser> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
+                      setState(() {
+                        isValiddob = false;
+                      });
                       return 'Please select your date of birth';
                     }
                     List split = value.split('-');
                     // print(DateTime.now().year.toString());
                     if(((DateTime.now().year)) - int.parse(split[2]) < 21){
+                      setState(() {
+                        isValiddob = false;
+                      });
                       // print("no");
                       return 'You are under age';
+                    }
+                    else{
+                      setState(() {
+                        isValiddob = true;
+                      });
                     }
                     // else{
                     //   print("yesssss");
@@ -322,7 +365,10 @@ class _CrudUserState extends State<CrudUser> {
                   focusColor: Colors.transparent,
                   decoration: InputDecoration(
                     labelText: "Select Your City",
-                    prefixIcon: Icon(Icons.location_city),
+                    prefixIcon: Icon(
+                        Icons.location_city,
+                        color: isValidcity ? Colors.black54 : Colors.red
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -340,7 +386,15 @@ class _CrudUserState extends State<CrudUser> {
                   },
                   validator: (value){
                     if(value == null || value.isEmpty){
+                      setState(() {
+                        isValidcity = false;
+                      });
                       return 'Plsese select your City';
+                    }
+                    else{
+                      setState(() {
+                        isValidcity = true;
+                      });
                     }
                   },
                 ),
