@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+import 'package:matrimonial_app/user.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -36,18 +38,40 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-            child: Text("ForeverFound", style: TextStyle(fontWeight: FontWeight.bold),)
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/imgs/logo.png',
+              height: 70,
+              fit: BoxFit.contain,
+            ),
+            const Text(
+              "JanmoKeSathi.com",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
-        backgroundColor: Colors.white70,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/imgs/bg1.png'),
-            fit: BoxFit.cover,
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromRGBO(188, 18, 238, 0.5),
+                Color.fromRGBO(255, 100, 200, 0.5),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
         ),
+      ),
+      body: Container(
+        // decoration: const BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage('assets/imgs/bg1.png'),
+        //     fit: BoxFit.cover,
+        //   ),
+        // ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +81,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   _buildBlurredButton(
                     onPressed: () {
-                      print('Button pressed!');
+                      print('Button 1 pressed!');
+                      Navigator.push(context,  MaterialPageRoute(builder: (context) => CrudUser()));
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -87,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(width: 20),
                   _buildBlurredButton(
                     onPressed: () {
-                      print('Button pressed!');
+                      print('Button 2 pressed');
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
