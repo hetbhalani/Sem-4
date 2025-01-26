@@ -4,8 +4,6 @@ import 'package:matrimonial_app/user.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:line_icons/line_icons.dart';
 
-
-
 class Userlist extends StatefulWidget {
   const Userlist({super.key});
 
@@ -15,9 +13,16 @@ class Userlist extends StatefulWidget {
 
 class _UserlistState extends State<Userlist> {
   TextEditingController search = TextEditingController();
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
+  final List<Widget> _pages = [
+    HomePage(),
+    CrudUser(),
+    Userlist(),
+    Center(child: Text('Favorites')),
+  ];
+
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Home',
@@ -36,7 +41,7 @@ class _UserlistState extends State<Userlist> {
       style: optionStyle,
     ),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +50,16 @@ class _UserlistState extends State<Userlist> {
           children: [
             Image.asset(
               'assets/imgs/logo.png',
-              height: 70,
+              height: 35,
               fit: BoxFit.contain,
             ),
+            SizedBox(
+              width: 10,
+            ),
             const Text(
-              "JanmoKeSathi.com",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 19,
-                  color: Colors.white),
+              "JanmoKeSathi",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ],
         ),
@@ -63,29 +69,27 @@ class _UserlistState extends State<Userlist> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20,20,20,0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: TextFormField(
                 controller: search,
                 decoration: InputDecoration(
-                  labelText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15))
-                  )
-                ),
+                    labelText: "Search",
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)))),
               ),
             ),
             Container(
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
-
               child: Column(
                 children: [
                   // Remove Expanded and directly use ListView.builder
                   ListView.builder(
                     itemCount: users.length,
                     shrinkWrap: true, // Add this to limit ListView height
-                    physics: NeverScrollableScrollPhysics(), // Disable ListView scrolling
+                    physics:
+                        NeverScrollableScrollPhysics(), // Disable ListView scrolling
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 5,
@@ -97,31 +101,75 @@ class _UserlistState extends State<Userlist> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.person),
-                                      SizedBox(width: 10,),
-                                      Text("${users[index]['name']} (Age: ${calcAge(users[index]['dob'])})"),
+                                      Row(children: [
+                                        Image.asset(
+                                          'assets/imgs/male.png',
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "${users[index]['name']}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                      ]),
+                                      Icon(Icons.favorite_border_rounded)
                                     ],
                                   ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.location_city),
-                                      SizedBox(width: 10,),
-                                      Text(users[index]['city']),
-                                    ],
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "City:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(users[index]['city']),
+                                      ],
+                                    ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.phone),
-                                      SizedBox(width: 10,),
-                                      Text(users[index]['phone']),
-                                    ],
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(50, 5, 0, 0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Phone:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(users[index]['phone']),
+                                      ],
+                                    ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.mail_outline_rounded),
-                                      SizedBox(width: 10,),
-                                      Text(users[index]['email']),
-                                    ],
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(50, 5, 0, 0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Email:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(users[index]['email']),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -129,12 +177,21 @@ class _UserlistState extends State<Userlist> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.favorite_border_rounded,size: 25,),
-                                  SizedBox(height: 5,),
-                                  Icon(Icons.edit,size: 25,),
-                                  SizedBox(height: 5,),
-                                  Icon(Icons.delete,size: 25,)
-
+                                  // Icon(Icons.favorite_border_rounded,size: 25),
+                                  // SizedBox(height: 5,),
+                                  Icon(
+                                    Icons.edit,
+                                    size: 25,
+                                    color: Colors.blueAccent,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Icon(
+                                    Icons.delete,
+                                    size: 25,
+                                    color: Colors.red,
+                                  )
                                 ],
                               ),
                             ],
@@ -184,36 +241,36 @@ class _UserlistState extends State<Userlist> {
                 GButton(
                   icon: Icons.home,
                   text: 'Home',
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                ),
+                GButton(
+                  icon: Icons.add_box_outlined,
+                  text: 'Add User',
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => CrudUser()));
+                  },
+                ),
+                GButton(
+                  icon: Icons.list_alt_rounded,
+                  text: 'User List',
+                  onPressed: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Userlist()));
+                  },
                 ),
                 GButton(
                   icon: Icons.favorite,
-                  text: 'Likes',
-                ),
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  text: 'Favorite',
                 ),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
                   _selectedIndex = index;
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    if(index == 0){
-                      return HomePage();
-                    }
-                    else if(index == 1){
-                      return CrudUser();
-                    }
-                    else if(index == 2){
-                      return Userlist();
-                    }
-                    return HomePage();
-                  } ));
                 });
               },
             ),
@@ -223,7 +280,7 @@ class _UserlistState extends State<Userlist> {
     );
   }
 
-  int calcAge(String val){
+  int calcAge(String val) {
     List split = val.split('-');
     return ((DateTime.now().year)) - int.parse(split[2]);
   }
