@@ -8,7 +8,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 List<Map<String, dynamic>> users = [
   {
-    "name": "Het",
+    "name": "Het Bhalani R.",
     "email": "bhalni2@gmail.com",
     "phone": "1234567890",
     "dob":"01-01-2000",
@@ -88,27 +88,7 @@ class _CrudUserState extends State<CrudUser> {
   bool isValidcity = true;
 
   GlobalKey<FormState> fk = GlobalKey();
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Search',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-  ];
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -118,19 +98,17 @@ class _CrudUserState extends State<CrudUser> {
           children: [
             Image.asset(
               'assets/imgs/logo.png',
-              height: 70,
+              height: 35,
               fit: BoxFit.contain,
             ),
+            SizedBox(width: 10,),
             const Text(
-              "JanmoKeSathi.com",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 19,
-                  color: Colors.white),
+              "JanmoKeSathi",
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
             ),
           ],
         ),
-        backgroundColor: Color.fromRGBO(255, 48, 48, 0.8),
+        backgroundColor: Color.fromRGBO(255, 34, 34, 0.8),
         // flexibleSpace: Container(
         //   decoration: BoxDecoration(
         //     gradient: LinearGradient(
@@ -170,7 +148,7 @@ class _CrudUserState extends State<CrudUser> {
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(255, 48, 48, 1.0)),
+                      color: Color.fromRGBO(255, 34, 34, 0.8)),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -662,36 +640,33 @@ class _CrudUserState extends State<CrudUser> {
                 GButton(
                   icon: Icons.home,
                   text: 'Home',
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+                  },
+                ),
+                GButton(
+                  icon: Icons.add_box_outlined,
+                  text: 'Add User',
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CrudUser()));
+                  },
+                ),
+                GButton(
+                  icon: Icons.list_alt_rounded,
+                  text: 'User List',
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Userlist()));
+                  },
                 ),
                 GButton(
                   icon: Icons.favorite,
-                  text: 'Likes',
-                ),
-                GButton(
-                  icon: Icons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  text: 'Favorite',
                 ),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
                   _selectedIndex = index;
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    if(index == 0){
-                      return HomePage();
-                    }
-                    else if(index == 1){
-                      return CrudUser();
-                    }
-                    else if(index == 2){
-                      return Userlist();
-                    }
-                    return HomePage();
-                  } ));
                 });
               },
             ),
