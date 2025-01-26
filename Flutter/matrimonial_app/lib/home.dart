@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matrimonial_app/UserList.dart';
 import 'dart:ui';
 
 import 'package:matrimonial_app/user.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(16.0),
-            backgroundColor: Colors.white.withOpacity(0.2),
+            backgroundColor: Color.fromRGBO(250, 198, 122,1),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
@@ -39,31 +40,36 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+
           children: [
             Image.asset(
               'assets/imgs/logo.png',
-              height: 70,
+              height: 35,
               fit: BoxFit.contain,
+              // alignment: Alignment.topLeft,
             ),
+            SizedBox(width: 10,),
             const Text(
-              "JanmoKeSathi.com",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              "JanmoKeSathi",
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
             ),
           ],
         ),
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(188, 18, 238, 0.5),
-                Color.fromRGBO(255, 100, 200, 0.5),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
+        backgroundColor: Color.fromRGBO(255, 34, 34, 0.8),
+        // flexibleSpace: Container(
+        //   decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //       colors: [
+        //         Color.fromRGBO(188, 18, 238, 0.5),
+        //         Color.fromRGBO(255, 100, 200, 0.5),
+        //       ],
+        //       begin: Alignment.topLeft,
+        //       end: Alignment.bottomRight,
+        //     ),
+        //   ),
+        // ),
+
       ),
       body: Container(
         // decoration: const BoxDecoration(
@@ -72,6 +78,7 @@ class _HomePageState extends State<HomePage> {
         //     fit: BoxFit.cover,
         //   ),
         // ),
+        color: Color.fromRGBO(249, 230, 207,1),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   _buildBlurredButton(
                     onPressed: () {
                       print('Button 1 pressed!');
-                      Navigator.push(context,  MaterialPageRoute(builder: (context) => CrudUser()));
+                      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => CrudUser()));
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -113,6 +120,7 @@ class _HomePageState extends State<HomePage> {
                   _buildBlurredButton(
                     onPressed: () {
                       print('Button 2 pressed');
+                      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => Userlist()));
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
