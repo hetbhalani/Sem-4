@@ -14,14 +14,16 @@ List<Map<String, dynamic>> users = [
     "dob":"01-01-2000",
     "city":"Junagadh",
     "gender":1,
+    "isFav":true
   },
   {
-    "name": "Het",
-    "email": "bhalni2@gmail.com",
-    "phone": "1234567890",
-    "dob":"01-01-2000",
-    "city":"Junagadh",
-    "gender":1,
+    "name": "ana de AAMRAS",
+    "email": "op6@gmail.com",
+    "phone": "0987654321",
+    "dob":"05-02-2000",
+    "city":"Vadodara",
+    "gender":0,
+    "isFav":false
   }
 ];
 

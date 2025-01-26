@@ -101,23 +101,21 @@ class _UserlistState extends State<Userlist> {
                                 children: [
                                   Row(
                                     children: [
-                                      Row(children: [
-                                        Image.asset(
-                                          'assets/imgs/male.png',
-                                          height: 40,
-                                          width: 40,
+                                      Image.asset(
+                                        users[index]['gender'] == 1? 'assets/imgs/male.png' : 'assets/imgs/female.png',
+                                        height: 40,
+                                        width: 40,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "${users[index]['name']}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
                                         ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "${users[index]['name']}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ]),
-                                      Icon(Icons.favorite_border_rounded)
+                                      ),
+                                      // Spacer(),
+                                      // Icon(Icons.favorite_border_rounded),
                                     ],
                                   ),
                                   Padding(
@@ -171,29 +169,65 @@ class _UserlistState extends State<Userlist> {
                                       ],
                                     ),
                                   ),
+                                  Padding(
+                                    padding:
+                                    const EdgeInsets.fromLTRB(50, 5, 0, 0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Gender:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+
+                                        Text(users[index]['gender'] == 1? 'Male': 'Female'),
+                                      ],
+                                    ),
+                                  ),
+
                                 ],
                               ),
                               Spacer(),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  // Icon(Icons.favorite_border_rounded,size: 25),
-                                  // SizedBox(height: 5,),
-                                  Icon(
-                                    Icons.edit,
-                                    size: 25,
+                                  IconButton(
+                                    icon: users[index]['isFav'] ?  Icon(Icons.favorite_border_rounded): Icon(Icons.favorite_rounded,color: Colors.pinkAccent,),
+                                    iconSize: 25,
+                                    onPressed: () {
+                                      print("Fav btn pressed");
+                                      setState(() {
+                                        users[index]['isFav'] = !users[index]['isFav'];
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(height: 55),
+                                  IconButton(
+                                    icon: Icon(Icons.edit),
+                                    iconSize: 25,
                                     color: Colors.blueAccent,
+                                    onPressed: () {
+                                      // Handle edit button press
+                                      print("Edit button pressed");
+                                    },
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Icon(
-                                    Icons.delete,
-                                    size: 25,
+                                  // SizedBox(height: 5),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    iconSize: 25,
                                     color: Colors.red,
-                                  )
+                                    onPressed: () {
+                                      print("Delete button pressed");
+                                      setState(() {
+                                        users.removeAt(index);
+                                      });
+                                    },
+                                  ),
                                 ],
-                              ),
+                              )
                             ],
                           ),
                           // subtitle: Column(
