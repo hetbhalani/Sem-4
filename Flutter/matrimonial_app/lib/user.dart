@@ -13,8 +13,8 @@ List<Map<String, dynamic>> users = [
     "phone": "1234567890",
     "dob":"01-01-2000",
     "city":"Junagadh",
-    "gender":1,
-    "isFav":true
+    "gender":true,
+    "isFav":false
   },
   {
     "name": "ana de AAMRAS",
@@ -22,7 +22,7 @@ List<Map<String, dynamic>> users = [
     "phone": "0987654321",
     "dob":"05-02-2000",
     "city":"Vadodara",
-    "gender":0,
+    "gender":false,
     "isFav":false
   }
 ];
@@ -34,6 +34,7 @@ class User {
   String dob;
   String city;
   bool gender;
+  bool isFav;
   // String hobbies;
   // String password;
 
@@ -44,6 +45,7 @@ class User {
     required this.dob,
     required this.city,
     required this.gender,
+    required this.isFav,
     // required this.hobbies,
     // required this.password,
   });
@@ -497,6 +499,7 @@ class _CrudUserState extends State<CrudUser> {
                                           dob: dob.text,
                                           city: selectedCity ?? '',
                                           gender: isMale,
+                                          isFav:false
                                           // hobbies: selectedHobbiesString,
                                           // password: password.text,
                                         );
@@ -508,9 +511,8 @@ class _CrudUserState extends State<CrudUser> {
                                             'phone': newUser.phone,
                                             'dob': newUser.dob,
                                             'city': newUser.city,
-                                            'gender': newUser.gender
-                                                ? 'Male'
-                                                : 'Female',
+                                            'gender': newUser.gender,
+                                            'isFav': newUser.isFav,
                                             // 'hobbies': newUser.hobbies,
                                             // 'password': newUser.password,
                                           });

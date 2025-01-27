@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:matrimonial_app/favUser.dart';
 import 'package:matrimonial_app/home.dart';
 import 'package:matrimonial_app/user.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:line_icons/line_icons.dart';
+
+List<Map<String,dynamic>>FavUser = [];
 
 class Userlist extends StatefulWidget {
   const Userlist({super.key});
@@ -102,7 +105,7 @@ class _UserlistState extends State<Userlist> {
                                   Row(
                                     children: [
                                       Image.asset(
-                                        users[index]['gender'] == 1? 'assets/imgs/male.png' : 'assets/imgs/female.png',
+                                        users[index]['gender']? 'assets/imgs/male.png' : 'assets/imgs/female.png',
                                         height: 40,
                                         width: 40,
                                       ),
@@ -183,7 +186,7 @@ class _UserlistState extends State<Userlist> {
                                           width: 10,
                                         ),
 
-                                        Text(users[index]['gender'] == 1? 'Male': 'Female'),
+                                        Text(users[index]['gender']? 'Male': 'Female'),
                                       ],
                                     ),
                                   ),
@@ -195,11 +198,19 @@ class _UserlistState extends State<Userlist> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    icon: users[index]['isFav'] ?  Icon(Icons.favorite_border_rounded): Icon(Icons.favorite_rounded,color: Colors.pinkAccent,),
+                                    icon: users[index]['isFav'] ? Icon(Icons.favorite_rounded,color: Colors.pinkAccent,) : Icon(Icons.favorite_border_rounded) ,
                                     iconSize: 25,
                                     onPressed: () {
+                                      if(!users[index]['isFav']){
+                                        FavUser.add(users[index]);
+                                      }
+                                      else{
+                                        FavUser.removeAt(index);
+                                      }
+                                      print(FavUser);
                                       print("Fav btn pressed");
                                       setState(() {
+
                                         users[index]['isFav'] = !users[index]['isFav'];
                                       });
                                     },
@@ -299,6 +310,10 @@ class _UserlistState extends State<Userlist> {
                 GButton(
                   icon: Icons.favorite,
                   text: 'Favorite',
+                  onPressed: (){
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => FavUsers()));
+                  },
                 ),
               ],
               selectedIndex: _selectedIndex,
