@@ -24,6 +24,15 @@ List<Map<String, dynamic>> users = [
     "city":"Vadodara",
     "gender":false,
     "isFav":false
+  },
+  {
+    "name": "batman",
+    "email": "op7@gmail.com",
+    "phone": "0987654321",
+    "dob":"05-02-2000",
+    "city":"Vadodara",
+    "gender":true,
+    "isFav":false
   }
 ];
 

@@ -5,9 +5,10 @@ import 'package:matrimonial_app/user.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:line_icons/line_icons.dart';
 
-List<Map<String,dynamic>>FavUser = [];
+
 
 class Userlist extends StatefulWidget {
+
   const Userlist({super.key});
 
   @override
@@ -201,16 +202,16 @@ class _UserlistState extends State<Userlist> {
                                     icon: users[index]['isFav'] ? Icon(Icons.favorite_rounded,color: Colors.pinkAccent,) : Icon(Icons.favorite_border_rounded) ,
                                     iconSize: 25,
                                     onPressed: () {
-                                      if(!users[index]['isFav']){
-                                        FavUser.add(users[index]);
-                                      }
-                                      else{
-                                        FavUser.removeAt(index);
-                                      }
-                                      print(FavUser);
-                                      print("Fav btn pressed");
                                       setState(() {
+                                        if(!users[index]['isFav']){
+                                          FavUser.add(users[index]);
+                                        }
+                                        else{
+                                          FavUser.removeWhere((user) => user['email'] == users[index]['email']);
 
+                                        }
+                                        print(FavUser);
+                                        print("Fav btn pressed");
                                         users[index]['isFav'] = !users[index]['isFav'];
                                       });
                                     },
@@ -235,6 +236,23 @@ class _UserlistState extends State<Userlist> {
                                       setState(() {
                                         users.removeAt(index);
                                       });
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Row(
+                                            children: [
+                                              Icon(Icons.delete_outline_rounded,
+                                                  color: Colors.red),
+                                              SizedBox(width: 8),
+                                              Text(
+                                                  "User Deleted successfully!"),
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.black87,
+                                          behavior: SnackBarBehavior.floating,
+                                          duration: Duration(seconds: 3),
+                                        ),
+                                      );
                                     },
                                   ),
                                 ],
@@ -313,6 +331,7 @@ class _UserlistState extends State<Userlist> {
                   onPressed: (){
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => FavUsers()));
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FavUsers()));
                   },
                 ),
               ],

@@ -4,7 +4,7 @@ import 'package:matrimonial_app/user.dart';
 import 'package:matrimonial_app/userList.dart';
 import 'package:matrimonial_app/home.dart';
 
-
+List<Map<String,dynamic>>FavUser = [];
 
 class FavUsers extends StatefulWidget {
   const FavUsers({super.key});
@@ -39,7 +39,7 @@ class _FavUsersState extends State<FavUsers> {
               child: Column(
                 children: [
                   // Remove Expanded and directly use ListView.builder
-                  ListView.builder(
+                  !FavUser.isEmpty? ListView.builder(
                     itemCount: FavUser.length,
                     shrinkWrap: true, // Add this to limit ListView height
                     physics:
@@ -56,13 +56,13 @@ class _FavUsersState extends State<FavUsers> {
                                   Row(
                                     children: [
                                       Image.asset(
-                                        users[index]['gender']? 'assets/imgs/male.png' : 'assets/imgs/female.png',
+                                        FavUser[index]['gender']? 'assets/imgs/male.png' : 'assets/imgs/female.png',
                                         height: 40,
                                         width: 40,
                                       ),
                                       SizedBox(width: 10),
                                       Text(
-                                        "${users[index]['name']}",
+                                        "${FavUser[index]['name']}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
@@ -85,7 +85,7 @@ class _FavUsersState extends State<FavUsers> {
                                         SizedBox(
                                           width: 8,
                                         ),
-                                        Text(users[index]['city']),
+                                        Text(FavUser[index]['city']),
                                       ],
                                     ),
                                   ),
@@ -102,7 +102,7 @@ class _FavUsersState extends State<FavUsers> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(users[index]['phone']),
+                                        Text(FavUser[index]['phone']),
                                       ],
                                     ),
                                   ),
@@ -119,7 +119,7 @@ class _FavUsersState extends State<FavUsers> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(users[index]['email']),
+                                        Text(FavUser[index]['email']),
                                       ],
                                     ),
                                   ),
@@ -137,7 +137,7 @@ class _FavUsersState extends State<FavUsers> {
                                           width: 10,
                                         ),
 
-                                        Text(users[index]['gender']? 'Male': 'Female'),
+                                        Text(FavUser[index]['gender']? 'Male': 'Female'),
                                       ],
                                     ),
                                   ),
@@ -149,20 +149,14 @@ class _FavUsersState extends State<FavUsers> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
-                                    icon: users[index]['isFav'] ? Icon(Icons.favorite_rounded,color: Colors.pinkAccent,) : Icon(Icons.favorite_border_rounded) ,
+                                    icon: Icon(Icons.favorite_rounded, color: Colors.pinkAccent),
                                     iconSize: 25,
                                     onPressed: () {
-                                      if(!users[index]['isFav']){
-                                        FavUser.add(users[index]);
-                                      }
-                                      else{
-                                        FavUser.removeAt(index);
-                                      }
-                                      print(FavUser);
-                                      print("Fav btn pressed");
                                       setState(() {
-
-                                        users[index]['isFav'] = !users[index]['isFav'];
+                                        users[users.indexOf(FavUser[index])]['isFav'] = !users[users.indexOf(FavUser[index])]['isFav'];
+                                        FavUser.removeAt(index);
+                                        print(FavUser);
+                                        print("Fav btn pressed");
                                       });
                                     },
                                   ),
@@ -185,6 +179,7 @@ class _FavUsersState extends State<FavUsers> {
                                       print("Delete button pressed");
                                       setState(() {
                                         users.removeAt(index);
+
                                       });
                                     },
                                   ),
@@ -203,7 +198,7 @@ class _FavUsersState extends State<FavUsers> {
                         ),
                       );
                     },
-                  ),
+                  ):Container(child: Text("Nathi koi"),),
                 ],
               ),
             ),
