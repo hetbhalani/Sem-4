@@ -5,8 +5,6 @@ import 'package:matrimonial_app/user.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 // import 'package:line_icons/line_icons.dart';
 
-
-
 class Userlist extends StatefulWidget {
 
   const Userlist({super.key});
@@ -24,7 +22,6 @@ class _UserlistState extends State<Userlist> {
     Userlist(),
     Center(child: Text('Favorites')),
   ];
-
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[

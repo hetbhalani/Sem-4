@@ -5,6 +5,10 @@ import 'dart:ui';
 import 'package:matrimonial_app/home.dart';
 import 'package:matrimonial_app/user.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
+
 
 List<Map<String, dynamic>> users = [
   {
@@ -205,6 +209,7 @@ class _CrudUserState extends State<CrudUser> {
                         ),
                         TextFormField(
                           controller: email,
+                          keyboardType: TextInputType.emailAddress,
                           // maxLength: 80,
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -275,12 +280,11 @@ class _CrudUserState extends State<CrudUser> {
                               });
                               return 'Please enter password';
                             }
-                            if (value.length != 8 ||
-                                !RegExp(r'^\d{8}$').hasMatch(value)) {
+                            if (value.length < 8) {
                               setState(() {
                                 isValidpass = false;
                               });
-                              return 'Enter 8 digit Password';
+                              return 'Enter at least 8 digit Password';
                             } else {
                               setState(() {
                                 isValidpass = true;
@@ -295,8 +299,7 @@ class _CrudUserState extends State<CrudUser> {
                         TextFormField(
                           controller: phone,
                           maxLength: 10,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],                          decoration: InputDecoration(
                             labelText: "Mobile Number",
                             prefixIcon: Icon(Icons.phone,
                                 color:
@@ -329,65 +332,6 @@ class _CrudUserState extends State<CrudUser> {
                         ),
                         SizedBox(
                           height: 10,
-                        ),
-                        TextFormField(
-                          controller: dob,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Date of Birth",
-                            prefixIcon: Icon(Icons.calendar_today,
-                                color: isValiddob
-                                    ? Colors.black54
-                                    : Colors.red), // Calendar icon
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onTap: () async {
-                            // Open the date picker when tapped
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now(),
-                            );
-
-                            if (pickedDate != null) {
-                              setState(() {
-                                dob.text =
-                                    "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
-                              });
-                            }
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              setState(() {
-                                isValiddob = false;
-                              });
-                              return 'Please select your date of birth';
-                            }
-                            List split = value.split('-');
-                            // print(DateTime.now().year.toString());
-                            if (((DateTime.now().year)) - int.parse(split[2]) <
-                                21) {
-                              setState(() {
-                                isValiddob = false;
-                              });
-                              // print("no");
-                              return 'You are under age';
-                            } else {
-                              setState(() {
-                                isValiddob = true;
-                              });
-                            }
-                            // else{
-                            //   print("yesssss");
-                            // }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -428,7 +372,66 @@ class _CrudUserState extends State<CrudUser> {
                           ],
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: dob,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            labelText: "Date of Birth",
+                            prefixIcon: Icon(Icons.calendar_today,
+                                color: isValiddob
+                                    ? Colors.black54
+                                    : Colors.red), // Calendar icon
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onTap: () async {
+                            // Open the date picker when tapped
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now(),
+                            );
+
+                            if (pickedDate != null) {
+                              setState(() {
+                                dob.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+                              });
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              setState(() {
+                                isValiddob = false;
+                              });
+                              return 'Please select your date of birth';
+                            }
+                            List split = value.split('-');
+                            int age = DateTime.now().year - int.parse(split[2]);
+                            int requiredAge = isMale ? 21 : 18;
+                            // print(DateTime.now().year.toString());
+                            if (age < requiredAge) {
+                              setState(() {
+                                isValiddob = false;
+                              });
+                              // print("no");
+                              return 'Minimum required age is ${requiredAge} for ${isMale?'Male':'Female'}';
+                            } else {
+                              setState(() {
+                                isValiddob = true;
+                              });
+                            }
+                            // else{
+                            //   print("yesssss");
+                            // }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
                         ),
                         DropdownButtonFormField<String>(
                           value: selectedCity,
@@ -514,7 +517,7 @@ class _CrudUserState extends State<CrudUser> {
                                         );
 
                                         setState(() {
-                                          users.add({
+                                          users.insert(0,{
                                             'name': newUser.name,
                                             'email': newUser.email,
                                             'phone': newUser.phone,
