@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:matrimonial_app/UserList.dart';
+import 'package:matrimonial_app/favUser.dart';
 import 'dart:ui';
 import 'package:matrimonial_app/home.dart';
 import 'package:matrimonial_app/user.dart';
@@ -334,43 +335,50 @@ class _CrudUserState extends State<CrudUser> {
                           height: 10,
                         ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Gender",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Gender",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Row(
                               children: [
-                                Expanded(
-                                  child: RadioListTile<bool>(
-                                    title: Text("Male"),
-                                    value: true,
-                                    groupValue: isMale,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isMale = value!;
-                                      });
-                                    },
-                                  ),
+                                Radio<bool>(
+                                  value: true,
+                                  groupValue: isMale,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isMale = value!;
+                                    });
+                                  },
                                 ),
-                                Expanded(
-                                  child: RadioListTile<bool>(
-                                    title: Text("Female"),
-                                    value: false,
-                                    groupValue: isMale,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isMale = value!;
-                                      });
-                                    },
-                                  ),
-                                ),
+                                Text("Male"),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio<bool>(
+                                  value: false,
+                                  groupValue: isMale,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isMale = value!;
+                                    });
+                                  },
+                                ),
+                                Text("Female"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                         SizedBox(
                           height: 20,
                         ),
@@ -641,7 +649,7 @@ class _CrudUserState extends State<CrudUser> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
@@ -677,6 +685,9 @@ class _CrudUserState extends State<CrudUser> {
                 GButton(
                   icon: Icons.favorite,
                   text: 'Favorite',
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> FavUsers()));
+                  },
                 ),
               ],
               selectedIndex: _selectedIndex,
